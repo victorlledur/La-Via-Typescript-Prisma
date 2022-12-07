@@ -15,15 +15,15 @@ async function main() {
     
     app.use(express.json());
     app.use(routes);
-  
+    try {
+      await prisma.$connect();
+      console.log(`😄 Connected successfuly to the database!`);
+    } catch (error) {
+      console.log(`😕 Failed connecting to the database! Please check the logs`);
+    }
     app.listen(port, async () => {
       console.log(`🚀 Service started and listening at: http://127.0.0.1:${port}`);
-      try {
-        await prisma.$connect();
-        console.log(`😄 Connected successfuly to the database!`);
-      } catch (error) {
-        console.log(`😕 Failed connecting to the database! Please check the logs`);
-      }
+      
     });
   }
   
